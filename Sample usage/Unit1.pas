@@ -39,12 +39,14 @@ type
     Btn_SmartPointer2: TButton;
     Btn_SmartPointer3: TButton;
     Btn_SmartPointer4: TButton;
+    Btn_SmartPoniter6: TButton;
     procedure Btn_ClassicClick(Sender: TObject);
     procedure Btn_SmartPointer1Click(Sender: TObject);
     procedure Btn_SmartPointer2Click(Sender: TObject);
     procedure Btn_SmartPointer3Click(Sender: TObject);
     procedure Btn_SmartPointer4Click(Sender: TObject);
     procedure Btn_SmartPoniter5Click(Sender: TObject);
+    procedure Btn_SmartPoniter6Click(Sender: TObject);
   private
   public
   end;
@@ -215,6 +217,23 @@ begin
   LvPerson3.Birthday;
   // The smart pointer references are released in reverse declaration order
   // (Person3, Person2, Person1)
+end;
+
+procedure TForm1.Btn_SmartPoniter6Click(Sender: TObject);
+var
+  LvPerson1, LvPerson2: TPerson;
+begin
+  ShowMessage('Creating object Ali');
+  LvPerson1 := SmartPointer6<TPerson>(TPerson.Create('Ali', 25));
+
+  ShowMessage('Creating object Alex');
+  LvPerson2 := SmartPointer6<TPerson>(TPerson.Create('Alex', 35));
+
+  LvPerson1.Birthday;
+  LvPerson2.Birthday;
+
+  ShowMessage('OK, so they talked about their birthdates!');
+  ShowMessage('End of the scope');
 end;
 
 procedure TForm1.Btn_ClassicClick(Sender: TObject);

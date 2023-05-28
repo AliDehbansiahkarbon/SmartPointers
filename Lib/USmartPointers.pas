@@ -91,6 +91,29 @@ type
   end;
 {$ENDREGION}
 
+{$REGION 'SmartPointer6 / Smart Pointer implementation using a combination of interface and record.'}
+  ISmartPointer6 = interface
+  ['{CE522D5D-41DE-4C6F-BC84-912C2AEF66B3}']
+  end;
+
+  TSmart = class(TInterfacedObject, ISmartPointer6)
+  private
+    FObject: TObject;
+  public
+    constructor Create(AObject: TObject);
+    destructor Destroy; override;
+  end;
+
+  SmartPointer6<T: class> = record
+  private
+    FGuard: ISmartPointer6;
+    FGuardedObject: T;
+  public
+    class operator Implicit(GuardedObject: T): SmartPointer6<T>;
+    class operator Implicit(Guard: SmartPointer6<T>): T;
+  end;
+{$ENDREGION}
+
 implementation
 
 {$REGION 'SmartPointer1 / Smart Pointer implementation using Object Interfaces.'}
@@ -288,4 +311,32 @@ begin
   Result := FValue;
 end;
 {$ENDREGION}
+
+{$REGION 'SmartPointer6 / Smart Pointer implementation using a combination of interface and record.'}
+
+{ TGuard }
+constructor TSmart.Create(AObject: TObject);
+begin
+  FObject := AObject;
+end;
+
+destructor TSmart.Destroy;
+begin
+  FObject.Free;
+  inherited;
+end;
+
+{ SmartGuard<T> }
+class operator SmartPointer6<T>.Implicit(Guard: SmartPointer6<T>): T;
+begin
+  Result := Guard.FGuardedObject;
+end;
+
+class operator SmartPointer6<T>.Implicit(GuardedObject: T): SmartPointer6<T>;
+begin
+  Result.FGuard := TSmart.Create(GuardedObject);
+  Result.FGuardedObject := GuardedObject;
+end;
+{$ENDREGION}
+
 end.
