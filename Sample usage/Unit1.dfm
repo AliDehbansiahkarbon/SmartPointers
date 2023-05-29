@@ -10,7 +10,9 @@ object Form1: TForm1
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   Position = poDesigned
+  PixelsPerInch = 96
   TextHeight = 15
   object Btn_SmartPointer1: TButton
     Left = 8

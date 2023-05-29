@@ -22,6 +22,7 @@ type
     end;
 {$ENDREGION}
 
+{$IF CompilerVersion >= 34.0}  // CMR is supported from 10.4 Sydney
 {$REGION 'SmartPointer2 / Smart Pointer implementation Using a CMR(Custom Managed Record) with a Base Class.'}
   TRefCountable = class abstract
   protected
@@ -42,6 +43,7 @@ type
     property Ref: T read FRef;
   end;
 {$ENDREGION}
+
 
 {$REGION 'SmartPointer3 / Smart Pointer implementation Using a CMR(Custom Managed Record) with a Shared Reference Count.'}
   TSmartPointer3<T: class> = record
@@ -76,6 +78,8 @@ type
     property Ref: T read FRef;
   end;
 {$ENDREGION}
+
+{$ENDIF}
 
 {$REGION 'SmartPointer5 / Smart Pointer implementation using anonymouse methods.'}
   ISmartPointer5<T: class> = interface (TFunc<T>)
@@ -136,6 +140,7 @@ begin
 end;
 {$ENDREGION}
 
+{$IF CompilerVersion >= 34.0}
 {$REGION 'SmartPointer2 / Smart Pointer implementation Using a CMR(Custom Managed Record) with a Base Class.'}
 class operator TSmartPointer2<T>.Assign(var ADest: TSmartPointer2<T>; const [ref] ASrc: TSmartPointer2<T>);
 begin
@@ -181,6 +186,7 @@ begin
     AtomicIncrement(FRef.FRefCount);
 end;
 {$ENDREGION}
+
 
 {$REGION 'SmartPointer3 / Smart Pointer implementation Using a CMR(Custom Managed Record) with a Shared Reference Count.'}
 class operator TSmartPointer3<T>.Assign(var ADest: TSmartPointer3<T>; const [ref] ASrc: TSmartPointer3<T>);
@@ -293,6 +299,8 @@ begin
     AtomicIncrement(RefCountPtr^);
 end;
 {$ENDREGION}
+
+{$ENDIF}
 
 {$REGION 'SmartPointer5 / Smart Pointer implementation using anonymouse methods.'}
 constructor TSmartPointer5<T>.Create(AValue: T);
