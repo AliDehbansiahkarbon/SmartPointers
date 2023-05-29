@@ -14,7 +14,7 @@ type
     constructor Create; reintroduce; overload;
     constructor Create(const AName: string; const AAge: Integer); reintroduce; overload;
     destructor Destroy; override;
-    procedure Birthday; // Increment Age
+    procedure Birthday;
     property Name: string read FName write FName;
     property Age: integer read FAge write FAge;
   end;
@@ -25,7 +25,7 @@ type
   public
     constructor Create(const AName: string; const AAge: Integer); reintroduce;
     destructor Destroy; override;
-    procedure Birthday; // Increment Age
+    procedure Birthday;
     property Name: string read FName write FName;
     property Age: integer read FAge write FAge;
   end;
@@ -291,8 +291,8 @@ begin
 end;
 {$ENDREGION}
 
-{$IF CompilerVersion >= 34.0}
 {$REGION 'TPersons implementation'}
+{$IF CompilerVersion >= 34.0}
 procedure TPersons.Birthday;
 begin
   ShowMessage(FName + ' was born in year ' + IntToStr(CurrentYear - FAge));
@@ -309,6 +309,7 @@ begin
   ShowMessage('Destroying ' + FName + '...');
   inherited;
 end;
-{$ENDREGION}
 {$ENDIF}
+{$ENDREGION}
+
 end.
