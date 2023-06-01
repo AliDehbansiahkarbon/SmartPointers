@@ -38,6 +38,7 @@ type
     Btn_SmartPointer3: TButton;
     Btn_SmartPointer4: TButton;
     Btn_SmartPoniter6: TButton;
+    Btn_SmartPoniter7: TButton;
     procedure Btn_ClassicClick(Sender: TObject);
     procedure Btn_SmartPointer1Click(Sender: TObject);
     procedure Btn_SmartPointer2Click(Sender: TObject);
@@ -45,6 +46,7 @@ type
     procedure Btn_SmartPointer4Click(Sender: TObject);
     procedure Btn_SmartPoniter5Click(Sender: TObject);
     procedure Btn_SmartPoniter6Click(Sender: TObject);
+    procedure Btn_SmartPoniter7Click(Sender: TObject);
   private
   public
   end;
@@ -257,6 +259,17 @@ begin
 
   ShowMessage('OK, so they talked about their birthdates!');
   ShowMessage('End of the scope');
+end;
+
+procedure TForm1.Btn_SmartPoniter7Click(Sender: TObject);
+var
+  x: TSmartPointer7<TLifetimeWatcher>;
+begin
+  x := TLifetimeWatcher.Create(procedure
+  begin
+    ShowMessage('Destroying...');
+  end);
+  ShowMessage(X.Value.Birthday);
 end;
 
 procedure TForm1.Btn_ClassicClick(Sender: TObject);

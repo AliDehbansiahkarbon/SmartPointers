@@ -120,6 +120,27 @@ type
   end;
 {$ENDREGION}
 
+{$REGION 'SmartPointer7 / Another Smart Pointer implementation using a combination of interface and record.'}
+  TLifetimeWatcher = class(TInterfacedObject)
+  private
+    FWhenDone: TProc;
+  public
+    constructor Create(const AWhenDone: TProc);
+    destructor Destroy; override;
+    function Birthday: string;
+  end;
+
+  TSmartPointer7<T: class> = record
+  strict private
+    FValue: T;
+    FLifetime: IInterface;
+  public
+    constructor Create(const AValue: T); overload;
+    class operator Implicit(const AValue: T): TSmartPointer7<T>;
+    property Value: T read FValue;
+  end;
+{$ENDREGION}
+
 implementation
 
 {$REGION 'SmartPointer1 / Smart Pointer implementation using Object Interfaces.'}
@@ -350,4 +371,39 @@ begin
 end;
 {$ENDREGION}
 
+{$REGION 'Smart pointer 7/ Another Smart Pointer implementation using a combination of interface and record.'}
+{ TLifetimeWatcher }
+function TLifetimeWatcher.Birthday: string;
+begin
+  Result := 'My birthday is november 01 2000';
+end;
+
+constructor TLifetimeWatcher.Create(const AWhenDone: TProc);
+begin
+  FWhenDone := AWhenDone;
+end;
+
+destructor TLifetimeWatcher.Destroy;
+begin
+  if Assigned(FWhenDone) then
+    FWhenDone;
+
+  inherited;
+end;
+
+{ TSmartPointer7<T> }
+constructor TSmartPointer7<T>.Create(const AValue: T);
+begin
+ FValue := AValue;
+  FLifetime := TLifetimeWatcher.Create(procedure
+  begin
+    AValue.Free;
+  end);
+end;
+
+class operator TSmartPointer7<T>.Implicit(const AValue: T): TSmartPointer7<T>;
+begin
+  Result := TSmartPointer7<T>.Create(AValue);
+end;
+{$ENDREGION}
 end.

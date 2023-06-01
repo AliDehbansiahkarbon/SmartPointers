@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 858
   Top = 415
   Caption = 'Form1'
-  ClientHeight = 225
+  ClientHeight = 262
   ClientWidth = 186
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -76,5 +76,14 @@ object Form1: TForm1
     Caption = 'SmartPoniter6'
     TabOrder = 6
     OnClick = Btn_SmartPoniter6Click
+  end
+  object Btn_SmartPoniter7: TButton
+    Left = 8
+    Top = 225
+    Width = 170
+    Height = 25
+    Caption = 'Btn_SmartPoniter7'
+    TabOrder = 7
+    OnClick = Btn_SmartPoniter7Click
   end
 end
